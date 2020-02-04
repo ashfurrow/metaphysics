@@ -99,6 +99,17 @@ export class SearchResolver {
       delete this.args.page
     }
 
+    /*
+    x86_64 Mozilla/5.0 Artsy-Mobile/6.2.1 Eigen/2019.05.24.09/6.2.1 (iPhone; iOS 13.3; Scale/3.00) AppleWebKit/601.1.46 (KHTML, like Gecko)
+    */
+    console.log({ userAgentString: this.context.userAgent })
+
+    const excludeCollectionsForMobileWorkaround =
+      this.context.userAgent &&
+      (this.context.userAgent.includes("Artsy-Mobile/6.2.0") ||
+        this.context.userAgent.includes("Artsy-Mobile/6.2.1"))
+    console.log({ excludeCollectionsForMobileWorkaround })
+
     const pageOptions = convertConnectionArgsToGravityArgs(this.args)
     if (!!this.args.page) pageOptions.page = this.args.page
     const { page, size, offset, ...rest } = pageOptions
@@ -106,6 +117,7 @@ export class SearchResolver {
       ...rest,
       page,
       size,
+      excludeCollectionsForMobileWorkaround,
       entities: this.args.entities,
       total_count: true,
     }
