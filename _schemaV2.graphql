@@ -567,7 +567,7 @@ enum ArticleSorts {
   PUBLISHED_AT_DESC
 }
 
-type Artist implements Node & Searchable & EntityWithFilterArtworksConnectionInterface {
+type Artist implements Node & Searchable & HomePageArtwork & EntityWithFilterArtworksConnectionInterface {
   # A globally unique ID.
   id: ID!
 
@@ -4827,13 +4827,17 @@ type HomePage {
   salesModule: HomePageSalesModule
 }
 
+type HomePageArtist implements Node {
+  name: String
+}
+
 type HomePageArtistModule implements Node {
   # A globally unique ID.
   id: ID!
 
   # Module identifier.
   key: String
-  results: [Artist]
+  results: [HomePageArtist]
 }
 
 enum HomePageArtistModuleTypes {
@@ -4845,6 +4849,15 @@ enum HomePageArtistModuleTypes {
 
   # The most searched for artists.
   POPULAR
+}
+
+# An artwork served from a HomePageModule
+interface HomePageArtwork {
+  href: String
+  name: String
+  formattedNationalityAndBirthday: String
+  image: Image
+  artworksConnection: ArtworkConnection
 }
 
 type HomePageArtworkModule implements Node {

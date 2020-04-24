@@ -1,6 +1,5 @@
 import { map } from "lodash"
-import Artist from "schema/v2/artist"
-import { NodeInterface } from "schema/v2/object_identification"
+import { ArtistType } from "schema/v2/artist"
 import { toGlobalId } from "graphql-relay"
 import {
   GraphQLEnumType,
@@ -61,12 +60,32 @@ export const HomePageArtistModuleTypes: {
   },
 }
 
+const HomePageArtist = new GraphQLObjectType<any, ResolverContext>({
+  name: "HomePageArtist",
+  interfaces: () => {
+    const {
+      HomePageArtistInterface,
+    } = require("schema/v2/home/home_page_artist_interface")
+    const { NodeInterface } = require("schema/v2/object_identification")
+    return [NodeInterface, HomePageArtistInterface]
+  },
+  fields: () => ({
+    basedOn: {
+      type: ArtistType,
+      resolve: ({ sim_artist }) => sim_artist,
+    },
+  }),
+})
+
 export const HomePageArtistModuleType = new GraphQLObjectType<
   any,
   ResolverContext
 >({
   name: "HomePageArtistModule",
-  interfaces: [NodeInterface],
+  interfaces: () => {
+    const { NodeInterface } = require("schema/v2/object_identification")
+    return [NodeInterface]
+  },
   fields: {
     id: {
       type: new GraphQLNonNull(GraphQLID),
@@ -80,7 +99,7 @@ export const HomePageArtistModuleType = new GraphQLObjectType<
       type: GraphQLString,
     },
     results: {
-      type: new GraphQLList(Artist.type),
+      type: new GraphQLList(HomePageArtist),
       resolve: ({ key }, _options, context) => {
         return HomePageArtistModuleTypes[key].resolve(context)
       },

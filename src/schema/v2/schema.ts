@@ -73,6 +73,7 @@ import { OrderPartyUnionType } from "./ecommerce/types/order_party_union"
 import { createAccountRequestMutation } from "./createAccountRequestMutation"
 
 import { SearchableItem } from "./SearchableItem"
+import { HomePageArtistInterface } from "./home/home_page_artist_interface"
 import { ArtistArtworkGridType } from "./artwork/artworkContextGrids/ArtistArtworkGrid"
 import { AuctionArtworkGridType } from "./artwork/artworkContextGrids/AuctionArtworkGrid"
 import { PartnerArtworkGridType } from "./artwork/artworkContextGrids/PartnerArtworkGrid"
@@ -200,6 +201,7 @@ export default new GraphQLSchema({
     ArtworkVersionType,
     OrderPartyUnionType,
     SearchableItem,
+    HomePageArtistInterface,
     ArtistArtworkGridType,
     AuctionArtworkGridType,
     PartnerArtworkGridType,

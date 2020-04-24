@@ -15,6 +15,7 @@ import numeral from "schema/v2/fields/numeral"
 import Image, { getDefault } from "schema/v2/image"
 import { setVersion } from "schema/v2/image/normalize"
 import Article, { articleConnection } from "schema/v2/article"
+import { HomePageArtistInterface } from "schema/v2/home/home_page_artist_interface"
 import { artworkConnection } from "schema/v2/artwork"
 import PartnerArtist from "schema/v2/partner_artist"
 import Meta from "./meta"
@@ -87,6 +88,7 @@ export const ArtistType = new GraphQLObjectType<any, ResolverContext>({
     return [
       NodeInterface,
       Searchable,
+      HomePageArtistInterface,
       EntityWithFilterArtworksConnectionInterface,
     ]
   },
